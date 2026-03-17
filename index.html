@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="https://lucide.dev/logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PortfolioOS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Courier+Prime:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'media',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            colors: {
+              os: {
+                bg: '#000000',
+                dock: 'rgba(255, 255, 255, 0.1)',
+                window: 'rgba(255, 255, 255, 0.85)',
+                windowDark: 'rgba(28, 28, 30, 0.85)',
+                accent: '#78716c', // Warm Gray (Stone 500)
+                border: 'rgba(0, 0, 0, 0.1)',
+                text: '#1d1d1f',
+                textDark: '#f5f5f7',
+              }
+            },
+            backgroundImage: {
+              'wallpaper': 'radial-gradient(circle at 50% 50%, #e7e5e4 0%, #a8a29e 100%)', // Warm gray gradient
+              'wallpaper-dark': 'radial-gradient(circle at 50% 50%, #44403c 0%, #1c1917 100%)',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body { margin: 0; overflow: hidden; user-select: none; }
+      /* Custom Scrollbar for OS feel */
+      ::-webkit-scrollbar { width: 8px; height: 8px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: rgba(120, 113, 108, 0.3); border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: rgba(120, 113, 108, 0.5); }
+
+      /* THEME VARIABLES */
+      :root {
+        /* Default Modern */
+        --bg-window: rgba(255, 255, 255, 0.85);
+        --bg-window-active: rgba(255, 255, 255, 0.95);
+        --bg-dock: rgba(255, 255, 255, 0.2);
+        --bg-bar: rgba(255, 255, 255, 0.3);
+        --border-color: rgba(255, 255, 255, 0.2);
+        --border-width: 1px;
+        --radius: 0.75rem;
+        --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        --font-family: 'Inter', sans-serif;
+        --text-color: #1d1d1f;
+        --text-muted: #57534e;
+        --accent-color: #78716c;
+        --dock-radius: 1rem;
+        --bar-height: 2rem;
+        --icon-filter: none;
+      }
+
+      /* Dark Mode overrides for default theme will be handled by Tailwind's dark: modifiers usually, 
+         but for our variables we set them here if we are not using 'retro' etc. 
+         Note: The app sets data-theme, which will override these root defaults if matched.
+      */
+
+      [data-theme='retro'] {
+        --bg-window: #c0c0c0;
+        --bg-window-active: #c0c0c0;
+        --bg-dock: #c0c0c0;
+        --bg-bar: #c0c0c0;
+        --border-color: #ffffff; /* Bevel highlight */
+        --border-width: 2px;
+        --radius: 0px;
+        --shadow: 4px 4px 0px 0px #000000;
+        --font-family: 'Courier Prime', monospace;
+        --text-color: #000000;
+        --text-muted: #444444;
+        --accent-color: #000080;
+        --dock-radius: 0px;
+        --icon-filter: grayscale(100%) contrast(1.2);
+      }
+
+      [data-theme='cyberpunk'] {
+        --bg-window: rgba(10, 10, 10, 0.9);
+        --bg-window-active: rgba(0, 0, 0, 0.95);
+        --bg-dock: rgba(0, 0, 0, 0.8);
+        --bg-bar: rgba(0, 0, 0, 0.8);
+        --border-color: #00ff00;
+        --border-width: 1px;
+        --radius: 0px;
+        --shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        --font-family: 'JetBrains Mono', monospace;
+        --text-color: #00ff00;
+        --text-muted: #00aa00;
+        --accent-color: #ff00ff;
+        --dock-radius: 0px;
+        --icon-filter: hue-rotate(90deg) brightness(1.2);
+      }
+
+      [data-theme='paper'] {
+        --bg-window: #ffffff;
+        --bg-window-active: #ffffff;
+        --bg-dock: #ffffff;
+        --bg-bar: #ffffff;
+        --border-color: #000000;
+        --border-width: 2px;
+        --radius: 0px;
+        --shadow: 6px 6px 0px 0px #000000;
+        --font-family: 'Playfair Display', serif;
+        --text-color: #000000;
+        --text-muted: #333333;
+        --accent-color: #000000;
+        --dock-radius: 0px;
+        --icon-filter: grayscale(100%) contrast(1.5);
+      }
+
+      [data-theme='nord'] {
+        --bg-window: rgba(46, 52, 64, 0.9);
+        --bg-window-active: rgba(59, 66, 82, 0.95);
+        --bg-dock: rgba(46, 52, 64, 0.5);
+        --bg-bar: rgba(46, 52, 64, 0.5);
+        --border-color: #81a1c1;
+        --border-width: 1px;
+        --radius: 0.75rem;
+        --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        --font-family: 'Inter', sans-serif;
+        --text-color: #eceff4;
+        --text-muted: #d8dee9;
+        --accent-color: #88c0d0;
+        --dock-radius: 1rem;
+        --icon-filter: sepia(20%) hue-rotate(180deg) saturate(0.8);
+      }
+
+      /* Helper classes to use these variables easily */
+      .theme-window {
+        background: var(--bg-window);
+        border: var(--border-width) solid var(--border-color);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        font-family: var(--font-family);
+        color: var(--text-color);
+      }
+      .theme-text { color: var(--text-color); }
+      .theme-text-muted { color: var(--text-muted); }
+      .theme-dock { 
+        background: var(--bg-dock); 
+        border: var(--border-width) solid var(--border-color);
+        border-radius: var(--dock-radius);
+      }
+      .theme-bar { 
+        background: var(--bg-bar); 
+        font-family: var(--font-family);
+        color: var(--text-color);
+        border-bottom: var(--border-width) solid var(--border-color);
+      }
+      .theme-icon { filter: var(--icon-filter); }
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "framer-motion": "https://esm.sh/framer-motion@^12.23.26",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "date-fns": "https://esm.sh/date-fns@^4.1.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

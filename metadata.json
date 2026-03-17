@@ -1,0 +1,5 @@
+{
+  "name": "PortfolioOS",
+  "description": "A macOS-inspired desktop operating system simulator serving as an interactive portfolio.",
+  "requestFramePermissions": []
+}
